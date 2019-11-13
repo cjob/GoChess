@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>" 
+    <script> 
+        var editmode = false;
+    
+        function onclickreset_handler(ev) {
+        ev.preventDefault();
+        console.log("onclickreset is working");
+        window.location.replace( window.location.origin + "?reset=yes");
+        }
+    
+    
+    
+        function dragover_handler(ev) {
+        ev.preventDefault()
+        console.log("Drag over is working");
+        //	" console.log(\"source \" + ev.srcElement.id + \" destination \" + ev.target.id );\n" +
+        }
+    
+        function startdrag_handler(ev) {
+        ev.preventDefault();
+        console.log("startDrag is working");
+        ev.dataTransfer.setData("start", ev.target.id);
+    //	console.log("source " + ev.target.id );
+        }
+    
+        function dropover_handler(ev) {
+        ev.preventDefault();
+        console.log("Drop is working");
+    //	console.log(\"source \" + ev.dataTransfer.getData(\"start\") + \" destination \" + ev.target.id );\n" +
+    //	console.log( window.location.origin + \"?start=\" + ev.dataTransfer.getData(\"start\") + \"&dest=\" + ev.target.id );\n" +
+        window.location.replace( window.location.origin + "?start=" + ev.dataTransfer.getData("start") + "&dest=" + ev.target.id );
+        }
+
+        </script>
+        </head><html>
+            <body>
+                    {{range .BoardArray}}
+                    {{if .imageIndex}}
+                        <img height=50 width=50 id="{{ .imageIndex }}" ondrop="dropover_handler(event)" ondragover="dragover_handler(event)" ondragstart="event.dataTransfer.setData( '?start' , '{{ .imageIndex }}' )" 
+                        src="{{ .imageIndex}}.gif" }}>
+                    {{else}}
+                        <img height=50 width=50 id="{{ .imageIndex }}" ondrop="dropover_handler(event)" ondragover="dragover_handler(event)" ondragstart="event.dataTransfer.setData('?start' , '{{ .imageIndex }}')" >
+                    {{end}}
+                    {{ if.ImageIndex.len ! 8)
+                        <br>
+                {{end}}
+                {.Board}
+            </body>
+            </html>
+            
